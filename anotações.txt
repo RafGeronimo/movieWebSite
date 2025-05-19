@@ -1,0 +1,249 @@
+Criando e abrindo a aplicação (c/ vite):
+
+npm create vite@latest appName --template react-ts
+
+cd appName 
+
+code .
+
+---------------------------------------
+
+About Typescript:
+
+Documentação do Typescript: https://www.typescriptlang.org
+Formação Typescript (Alura): https://cursos.alura.com.br/formacao-typescript-desenvolva-front-end-produtividade
+
+---------------------------------------
+
+Curso: React: desenvolva aplicações tipadas e escaláveis com Typescript
+
+Aula 01:
+
+Atomic Design é uma metodologia criada por Brad Frost que nos ajuda a criar interfaces de forma mais organizada. 
+Ela se baseia na ideia de dividir a interface em partes menores e reutilizáveis, que podem ser combinadas para formar componentes maiores e mais complexos.
+
+Os cinco níveis do Atomic Design
+Átomos: são os blocos de construção mais básicos. Pense neles como botões, campos de texto, cores, fontes, etc. Eles são os elementos mais simples e não podem ser divididos em partes menores.
+
+Moléculas: são grupos de átomos que se juntam para formar uma unidade funcional. Por exemplo, um campo de texto com um rótulo e um botão de envio.
+
+Organismos: são grupos de moléculas que trabalham juntas para formar uma seção distinta da interface. Por exemplo, um cabeçalho de site que inclui um logotipo, um menu de navegação e um campo de busca.
+
+Templates: são layouts de página que mostram como os organismos se encaixam juntos. Eles são como esboços que mostram a estrutura da página sem o conteúdo final.
+
+Páginas: são templates preenchidos com conteúdo real. Elas representam o produto final que a pessoa usuária verá.
+
+Vantagens do Atomic Design
+Reutilização: como você está criando componentes pequenos e reutilizáveis, pode usá-los em diferentes partes do seu projeto, economizando tempo e esforço.
+Consistência: ajuda a manter um design consistente em todo o projeto, pois os mesmos componentes são usados repetidamente.
+Facilidade de manutenção: se precisar fazer uma alteração, você só precisa atualizar o componente em um lugar, e a mudança se refletirá em todo o projeto.
+Colaboração: facilita o trabalho em equipe, pois todos os membros podem entender e usar os mesmos componentes.
+
+Livro: https://atomicdesign.bradfrost.com
+
+Atributos intrínsicos e generics: 
+O react traz atribustos intrínsicos para tipagem, por exemplo para um componente ancora podemos usar Atributos intrínsicos para que o comp receba nao so strings, mas até um jsx;
+assim, tipamos usando os atributos para uma anchor e colocamos o HTMLAnchorElemento como generics para definir corretamente as props que ele pode receber (ver componente Link);
+
+Generics:
+
+Generics são uma maneira de criar variáveis, dados, código que funcionam com uma variedade de tipos em TypeScript. 
+Eles permitem que você crie funções, classes e interfaces que não são limitadas a um único tipo de dado, mas que podem trabalhar com qualquer tipo que você especificar quando as utilizar.
+
+Pensa no seguinte: você está criando uma função que precisa trabalhar com arrays de números e strings. 
+Sem generics, você teria que criar duas funções separadas, uma para cada tipo de dado. 
+Com generics, você pode criar uma única função que funciona para ambos os tipos, tornando seu código mais limpo e fácil de manter.
+Ex: funcao que retorna o primeiro elemento de um array de qualquer tipo;
+
+function getFirstElement<T>(arr: T[]): T {
+    return arr[0];
+}
+
+const numberArray = [1, 2, 3];
+const stringArray = ["a", "b", "c"];
+
+console.log(getFirstElement(numberArray)); // Saída: 1
+console.log(getFirstElement(stringArray)); // Saída: "a"
+
+generics (doc TS): https://www.typescriptlang.org/docs/handbook/2/generics.html
+livro: https://www.casadocodigo.com.br/products/livro-typescript
+
+No React, usamos componentes para dividir nossa aplicação em partes menores e mais gerenciáveis. 
+Fazer uma composição de componentes é um processo similar a construir uma casa. 
+Combinar partes pequenas para criar algo grande, essa é a ideia. 
+Então no React combinamos componentes menores para criar componentes maiores e mais complexos. 
+Isso nos ajuda a reutilizar código e a manter nossa aplicação organizada e fácil de entender.
+
+Exemplo simples de composição:
+Suponha que queremos criar um cartão de perfil de usuário. 
+Podemos ter componentes menores como Avatar, UserName e UserBio, e então compô-los em um componente maior chamado UserProfile.
+
+        type AvatarProps = {
+        src: string;
+        };
+
+        function Avatar({ src }: AvatarProps) {
+        return <img src={src} alt="User Avatar" />;
+        }
+
+        type UserNameProps = {
+        name: string;
+        };
+
+        function UserName({ name }: UserNameProps) {
+        return <h2>{name}</h2>;
+        }
+
+        type UserBioProps = {
+        bio: string;
+        };
+
+        function UserBio({ bio }: UserBioProps) {
+        return <p>{bio}</p>;
+        }
+
+        type User = {
+        avatar: string;
+        name: string;
+        bio: string;
+        };
+
+        type UserProfileProps = {
+        user: User;
+        };
+
+        function UserProfile({ user }: UserProfileProps) {
+        return (
+            <div>
+            <Avatar src={user.avatar} />
+            <UserName name={user.name} />
+            <UserBio bio={user.bio} />
+            </div>
+        );
+        }
+
+        // Uso do componente UserProfile
+        const user: User = {
+        avatar: "https://example.com/avatar.jpg",
+        name: "John Doe",
+        bio: "Desenvolvedor de software apaixonado por tecnologia.",
+        };
+
+        <UserProfile user={user} />;
+
+Padrões para reutilização de componentes:
+
+1. Props para personalização
+Os "props" (abreviação de propriedades) são a maneira de passar dados de um componente pai para um componente filho. 
+Isso permite que os componentes sejam reutilizáveis e personalizáveis.
+
+2. Children para conteúdo dinâmico
+O padrão children permite que você passe elementos TSX como conteúdo de um componente. 
+Isso é útil quando você quer que um componente seja flexível em relação ao que ele pode renderizar.
+
+        import { ReactNode } from "react";
+
+        type CardProps = {
+        children: ReactNode;
+        };
+
+        function Card({ children }: CardProps) {
+        return <div className="card">{children}</div>;
+        }
+
+        // Uso do componente Card
+        <Card>
+        <h1>Título do Card</h1>
+        <p>Este é o conteúdo do card.</p>
+        </Card>;
+       
+3. Render Props
+Render props é um padrão que permite que você compartilhe lógica entre componentes usando uma função que retorna um elemento React.
+
+        type DataFetcherProps<T> = {
+        render: (data: T) => JSX.Element;
+        };
+
+        function DataFetcher<T>({ render }: DataFetcherProps<T>) {
+        const data = fetchDataFromAPI() as T; // Suponha que esta função busca dados de uma API
+        return render(data);
+        }
+
+        // Uso do componente DataFetcher
+        <DataFetcher<{ value: string }>
+        render={(data) => <DisplayData data={data} />}
+        />;
+        
+Composição de componentes é um dos pilares para criar aplicações escaláveis com React. 
+Ao entender e aplicar esses conceitos, você será capaz de criar aplicações mais organizadas, reutilizáveis e fáceis de manter.
+
+
+Type vs Interface:
+
+Ambos são usados para definir a forma que um objeto deve ter, mas existem algumas diferenças entre eles. 
+Vamos explorar essas diferenças e entender quando e por que usar cada um.
+
+type é uma maneira de definir um tipo personalizado. Ele pode ser usado para criar tipos complexos a partir de tipos primitivos ou outros tipos. 
+Com type, você pode definir tipos para objetos, uniões, interseções, e até mesmo tipos mais complexos. Exemplo:
+
+        // Definindo um tipo para um objeto
+        type Pessoa = {
+        nome: string;
+        idade: number;
+        };
+
+        // Usando o tipo
+        const pessoa: Pessoa = {
+        nome: "João",
+        idade: 25,
+        };
+
+Quando usar type?
+Uniões e Interseções: quando você precisa combinar tipos, type é uma boa escolha. 
+Ele permite criar uniões (um tipo ou outro) e interseções (combinação de tipos).
+Ex:
+        type ID = string | number; // União
+        type Coordenadas = { x: number } & { y: number }; // Interseção
+
+OBS: se você precisa definir tipos que não são apenas objetos, como uniões de tipos primitivos, type é mais flexível.
+
+Interface é outra maneira de definir a forma de um objeto no TypeScript. 
+Ela é usada principalmente para definir contratos para objetos, ou seja, especificar quais propriedades e métodos um objeto deve ter. 
+Uma classe/objeto que implementa uma interface deve ter todos os campos e métodos (tirando os que você explicitamente declara como opcionais). 
+Portanto, nós os usamos para verificação de tipo. Ex:
+
+        // Definindo uma interface para um objeto
+        interface Carro {
+        marca: string;
+        ano: number;
+        }
+
+        // Usando a interface
+        const carro: Carro = {
+        marca: "Toyota",
+        ano: 2020,
+        };
+
+Quando usar interface?
+Objetos e Classes: interface é ideal para definir a estrutura de objetos e classes. 
+Ela é mais adequada quando você quer garantir que um objeto ou classe siga um determinado contrato.
+
+Extensibilidade: interface permite que você estenda outras interfaces, o que é útil para criar hierarquias de tipos. Exemplo:
+
+        interface Veiculo {
+        rodas: number;
+        }
+
+        interface Carro extends Veiculo {
+        marca: string;
+        }
+
+        const meuCarro: Carro = {
+        rodas: 4,
+        marca: "Ford",
+        };
+
+Diferenças principais
+1. Extensão: interface pode ser estendida por outras interfaces, enquanto type pode usar interseções para combinar tipos, mas não pode ser estendido da mesma forma.
+2. Uniões: type pode criar uniões de tipos, enquanto interface não pode.
+3. Implementação em Classes: interface é mais comumente usada para definir contratos que classes devem seguir.
