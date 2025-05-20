@@ -1,9 +1,6 @@
 import classNames from "classnames";
 import styles from "./Tag.module.css";
-
-export type Categoria = "2D" | "3D";
-
-export type Classificacao = "Livre" | "10 anos" | "12 anos" | "14 anos" | "16 anos";
+import type { Categoria, Classificacao } from "../../types";
 
 type TagProps = {
   value: Categoria | Classificacao;

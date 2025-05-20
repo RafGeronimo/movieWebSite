@@ -1,18 +1,9 @@
-import Tag, { type Categoria, type Classificacao } from "../Tag";
+import type { Movie } from "../../types";
+import Tag from "../Tag";
 import styles from "./CardMovie.module.css";
 
-type CardMovieProps = {
-  src: string;
-  alt: string;
-  title: string;
-  gender: string;
-  duration: number;
-  category: Categoria;
-  classification: Classificacao;
-};
-
-const CardMovie = (props: CardMovieProps) => {
-  const { src, alt, title, gender, category, duration, classification } = props;
+const CardMovie = (props: Movie) => {
+  const { src, alt, title, genre, category, duration, classification } = props;
   return (
     <li className={styles.card}>
       <img src={src} alt={alt} />
@@ -21,7 +12,7 @@ const CardMovie = (props: CardMovieProps) => {
       </div>
       <div className={styles.informacoes}>
         <div className={styles.linha1}>
-          <p>{gender}</p>
+          <p>{genre}</p>
           <Tag value={category} />
         </div>
         <div className={styles.linha2}>

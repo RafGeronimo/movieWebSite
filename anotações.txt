@@ -247,3 +247,14 @@ Diferenças principais
 1. Extensão: interface pode ser estendida por outras interfaces, enquanto type pode usar interseções para combinar tipos, mas não pode ser estendido da mesma forma.
 2. Uniões: type pode criar uniões de tipos, enquanto interface não pode.
 3. Implementação em Classes: interface é mais comumente usada para definir contratos que classes devem seguir.
+
+Conceito DRY - Don't Repeat Yourself:
+
+O princípio DRY recomenda que devemos evitar a repetição de código sempre que possível. 
+Ao definir um tipo reutilizável, eliminamos a necessidade de escrever e manter múltiplas definições para os mesmos dados, tornando o código mais limpo, seguro e fácil de manter.
+
+Na modelagem de dados um caso simples poderia ser o de termos as tabelas Jogador, Técnico e Juiz. 
+Todas estas entidades possuem dados diferentes entre si (por isso precisamos de três tabelas diferentes), mas ainda assim contêm Nome, Idade e País de Origem. 
+Ao invés de termos os dados Nome, Idade e País de Origem repetindo nas tabelas três tabelas, 
+uma solução seria criarmos a entidade Pessoa, com os dados repetitivos, e usarmos a chave primária dessa tabela como chave estrangeira nas outras tabelas. 
+Ou seja, estamos herdando dados da tabela base Pessoa.
